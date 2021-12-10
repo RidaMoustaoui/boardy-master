@@ -1,0 +1,17 @@
+
+
+<div class="test">
+    <div class="test2">
+    <h2>Formulaire</h2>&nbsp;
+    <form [formGroup]="form"(ngSubmit)="submit()">
+        <div class="control">
+        <input class="input is-focused" formControlName="title" name="title" type="text" placeholder="Nom de la colonne"/>&nbsp;
+          </div>
+      <textarea class="textarea is-info" name="description" type="text" placeholder="description" formControlName="description" required minlength="10"></textarea>&nbsp;
+        
+     <div>
+        <button class="button is-info is-focused"  type="submit" [disabled]="form.invalid">Enregistrer</button>
+    </div>
+    </form>
+    </div>
+</div>

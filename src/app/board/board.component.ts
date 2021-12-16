@@ -14,6 +14,8 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+  columnEditing!: Column;
+ 
 
   constructor(private boardService: BoardService) { }
 
@@ -35,13 +37,8 @@ export class BoardComponent implements OnInit {
     this.columns = this.columns.filter(c => c._id != columnId);
   }
 
-  uptadeColumn(){
-    this.boardService.edit(this.column._id).pipe(first()).subscribe({
-      next:() => {
-          console.log("test");
-      }
-
-    })
+  editColumn(column: Column){
+    this.columnEditing = column;  
   }
 
   

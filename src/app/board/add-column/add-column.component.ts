@@ -12,10 +12,24 @@ import { BoardService } from '../@shared/services/board.service';
   styleUrls: ['./add-column.component.scss']
 })
 export class AddColumnComponent implements OnInit {
+  columnIdEdting: number | undefined;
   @Input() column!: Column;
   @Output() onColumnAdded: EventEmitter<Column> = new EventEmitter<Column>();
+  @Input("columnEditing") set setColumnEditing(column :Column | undefined ){
+    console.log("column > ", column)
+    this.columnIdEdting= column?._id;
+    if(column != undefined) {
+       this.form.patchValue({
+         title: column.title,
+         description: column.description,
+       
+       })
+    }
+  }
   
 
+ 
+  
   name = 'Angular';
   public form!: FormGroup
 
@@ -30,18 +44,31 @@ export class AddColumnComponent implements OnInit {
 
 
 
-
   submit(): void {
     console.log(this.form.value);
     const title: string = this.form.get("title")?.value;
     const description: string = this.form.get("description")?.value;
 
     // this.onColumnAdded.emit({ title: title, description: description });
-
+    
+    
     this.boardService.addColumn({ title: title, description: description }).subscribe((columnAdded: Column) => {
       this.onColumnAdded.emit(columnAdded)
-    })
 
+    })
+  
+    if ( this.columnIdEdting != undefined) {
+      this.boardService.edit(this.column)
+
+    }
+    
+
+  
+    //this.boardService.edit(this.column).subscribe((columnEditing: Column) => {
+     // this.onEdit.emit(this.column);
+      
+   // })
+      
    
 
    

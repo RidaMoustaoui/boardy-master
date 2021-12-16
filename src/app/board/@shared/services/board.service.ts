@@ -7,8 +7,8 @@ import { Column } from '../models/column';
 
 
 
-const  lienColonne = "https://crudcrud.com/api/25d7e89b36954647817b85ff40379de3/columns";
-const  liencard = "https://crudcrud.com/api/25d7e89b36954647817b85ff40379de3/cards";
+const  lienColonne = "https://crudcrud.com/api/1fc51d06daba4978868cb2583bdc372a/columns";
+const  liencard = "https://crudcrud.com/api/1fc51d06daba4978868cb2583bdc372a/cards";
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +30,9 @@ delete(columnId: number) {
   return this.http.delete(`${lienColonne}/${columnId}`);
 }
 
-edit(columnId: number): Observable<any>{
-  const url = `${lienColonne}/${columnId}`;
-  return this.http.put<Column>(url, columnId);
+edit(column: Column): Observable<any>{
+  const url = `${lienColonne}/${column}`;
+  return this.http.put<Column>(url, column);
 }
 
 }

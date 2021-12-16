@@ -12,7 +12,8 @@ export class ColumnComponent implements OnInit {
 
   @Input() column!: Column;
   @Output() onDeleted : EventEmitter<number> = new EventEmitter();
-
+  @Output() onEdit : EventEmitter<Column> = new EventEmitter();
+  
   constructor(private boardService : BoardService) { }
 
  delete(){
@@ -21,14 +22,8 @@ export class ColumnComponent implements OnInit {
     })
   }
   
-editColumn() {
-  this.boardService.edit(this.column._id).subscribe()
-
-  
-  
-
-  
- 
+edit() {
+    this.onEdit.emit(this.column);
 }
 
 

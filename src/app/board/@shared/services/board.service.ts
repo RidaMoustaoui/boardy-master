@@ -30,8 +30,9 @@ delete(columnId: number) {
   return this.http.delete(`${lienColonne}/${columnId}`);
 }
 
-edit(column: Column): Observable<any>{
-  const url = `${lienColonne}/${column}`;
+
+edit(id: number, column: Partial<Column>): Observable<any>{
+  const url = `${lienColonne}/${id}`;
   return this.http.put<Column>(url, column);
 }
 

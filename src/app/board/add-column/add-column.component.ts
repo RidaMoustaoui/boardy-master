@@ -12,9 +12,10 @@ import { BoardService } from '../@shared/services/board.service';
   styleUrls: ['./add-column.component.scss']
 })
 export class AddColumnComponent implements OnInit {
-  columnIdEdting: number | undefined;
+  columnIdEdting?: number;
   @Input() column!: Column;
   @Output() onColumnAdded: EventEmitter<Column> = new EventEmitter<Column>();
+  @Output() onEdit: EventEmitter<Column> = new EventEmitter<Column>();
   @Input("columnEditing") set setColumnEditing(column :Column | undefined ){
     console.log("column > ", column)
     this.columnIdEdting= column?._id;
@@ -45,37 +46,49 @@ export class AddColumnComponent implements OnInit {
 
 
   submit(): void {
-    console.log(this.form.value);
+  // console.log(this.form.value);
+    // const title: string = this.form.get("title")?.value;
+    // const description: string = this.form.get("description")?.value;
+
+    // this.onColumnAdded.emit({ title: title, description: description });
+
+
+    //this.boardService.addColumn({ title: title, description: description }).subscribe((columnAdded: Column) => {
+    // this.onColumnAdded.emit(columnAdded)
+
+    //})
     const title: string = this.form.get("title")?.value;
     const description: string = this.form.get("description")?.value;
 
-    // this.onColumnAdded.emit({ title: title, description: description });
-    
-    
-    this.boardService.addColumn({ title: title, description: description }).subscribe((columnAdded: Column) => {
-      this.onColumnAdded.emit(columnAdded)
-
-    })
-  
-    if ( this.columnIdEdting != undefined) {
-      this.boardService.edit(this.column)
-
+    if (!this.columnIdEdting) {
+      console.log(this.form.value);
+      this.boardService.addColumn({ title: title, description: description }).subscribe((columnAdded: Column) => {
+        this.onColumnAdded.emit(columnAdded)
+      })
     }
-    
+    else {
+      console.log(this.columnIdEdting);
+      this.boardService.edit(this.columnIdEdting, { title: title, description: description }).subscribe((columnIdEdting: Column) => {
+        this.onEdit.emit(columnIdEdting)
+        window.location.reload()
+      })  
+    }
 
-  
+
+
+
     //this.boardService.edit(this.column).subscribe((columnEditing: Column) => {
-     // this.onEdit.emit(this.column);
-      
-   // })
-      
-   
+    // this.onEdit.emit(this.column);
 
-   
-    
-    
-    
-    
+    // })
+
+
+
+
+
+
+
+
     // if (this.form.valid) {
     //   console.log('form value: ', this.form.value);
     // } else {
